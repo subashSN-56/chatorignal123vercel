@@ -1,44 +1,3 @@
-// // server.js
-// import express from "express";
-// import dotenv from "dotenv";
-// import authRoutes from "../src/routes/auth.route.js";
-// import userRoutes from "../src/routes/user.route.js";
-// import chatRoutes from "../src/routes/chat.route.js";
-// import connectDB from "../src/lib/db.js";
-// import cors from "cors";
-// import cookieParser from "cookie-parser";
-
-// dotenv.config();
-
-// const app = express();
-
-// // Middleware
-// app.use(express.json());
-// app.use(cookieParser());
-
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL || "http://localhost:5173", // frontend domain
-//     credentials: true,
-//   })
-// );
-
-// // Connect to MongoDB
-// connectDB();
-
-// // Routes
-// app.get("/", (req, res) => {
-//   res.send("✅ Basic ES Module Express Server is running on Vercel...");
-// });
-
-// app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/chat", chatRoutes);
-
-// // ❌ DO NOT use app.listen() on Vercel
-// export default app; // ✅ Required for Vercel
-
-
 // src/server.js
 import express from "express";
 import dotenv from "dotenv";
@@ -58,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS (use your frontend domain in production)
+// ✅ CORS setup (replace with your deployed frontend URL later)
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:5173",
@@ -66,15 +25,15 @@ app.use(
   })
 );
 
-// Connect DB
+// ✅ Connect MongoDB
 connectDB();
 
-// API routes
+// ✅ API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-// ✅ Serve frontend build
+// ✅ Serve React frontend (after build)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -84,5 +43,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
-// ❌ No app.listen() for Vercel
+// ❌ No app.listen() — Vercel handles this
 export default app;
