@@ -42,6 +42,10 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running...");
+});
+
 
 // ❌ No app.listen() — Vercel handles this
 export default app;
